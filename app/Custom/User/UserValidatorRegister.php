@@ -1,9 +1,10 @@
 <?php
+namespace App\Custom\User;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class ValidateUser
+class UserValidatorRegister
 {
 
     public function validate(Request $request)
@@ -12,6 +13,7 @@ class ValidateUser
         try {
             $rules = ([
                 'name'=>'required',
+                'nick'=>'required',
                 'email'=>'required|email|unique:users',
                 'password'=>[
                     'required',
@@ -35,7 +37,7 @@ class ValidateUser
 
             return [
                 'status'=>200,
-                'value'=>'ok'
+                'value'=>$request->input()
             ];
         } catch (Exception $e) {
             return [

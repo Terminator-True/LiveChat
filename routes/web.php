@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::get('/form',[AuthController::class, 'show_form'])->name('web.form');
+
 Route::post('/register',[AuthController::class, 'register'])->name('user.register');
 Route::post('/login',[AuthController::class, 'login'])->name('user.login');
 
