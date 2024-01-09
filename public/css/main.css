@@ -27,7 +27,7 @@
   box-sizing: border-box;
   font-size: 14px;
 }
-.form button {
+.button_piu {
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
@@ -41,7 +41,7 @@
   transition: all 0.3 ease;
   cursor: pointer;
 }
-.form button:hover,.form button:active,.form button:focus {
+.button_piu:hover,.button_piu:active,.button_piu:focus {
   background: #c96cff;
 }
 .form .message {

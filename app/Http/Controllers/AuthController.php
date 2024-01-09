@@ -29,7 +29,9 @@ class AuthController extends Controller
             return view('registerAndLogin')->with(['error'=>'Mail or Password incorrect']);
         }
 
-        if ($this->user->create($result['value']) != 200) return view('registerAndLogin');
+        $user_creation_status = $this->user->create($result['value']);
+
+        if ($user_creation_status != 200) return view('registerAndLogin');
 
         return view('welcome');
 
@@ -45,7 +47,9 @@ class AuthController extends Controller
             return view('registerAndLogin')->with(['error'=>'Mail or Password incorrect']);
         }
 
-       if( $this->user->login($result['value']) != 200 )
+        $user_login_status = $this->user->login($result['value']);
+
+        if( $user_login_status != 200 )
         {
             return view('registerAndLogin')->with(['error'=>'Mail or Password incorrect']);
         }
@@ -56,8 +60,9 @@ class AuthController extends Controller
 
     public function logout()
     {
-        if($this->user->logout()) return view('welcome');
+        $user_logout_status = $this->user->logout();
 
+        if($user_logout_status) return view('welcome');
     }
 
 }
