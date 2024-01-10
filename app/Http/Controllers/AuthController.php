@@ -33,9 +33,7 @@ class AuthController extends Controller
 
         if ($user_creation_status != 200) return view('registerAndLogin');
 
-        return view('welcome');
-
-
+        return redirect(route('web.home'));
 
     }
 
@@ -54,7 +52,7 @@ class AuthController extends Controller
             return view('registerAndLogin')->with(['error'=>'Mail or Password incorrect']);
         }
 
-        return view('welcome');
+        return redirect(route('web.home'));
 
     }
 
@@ -62,7 +60,7 @@ class AuthController extends Controller
     {
         $user_logout_status = $this->user->logout();
 
-        if($user_logout_status) return view('welcome');
+        if($user_logout_status) return redirect(route('web.form'));
     }
 
 }

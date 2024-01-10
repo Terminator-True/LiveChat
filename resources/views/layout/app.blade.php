@@ -13,6 +13,10 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <link rel="stylesheet" href="css\main.css">
         <link rel="stylesheet" href="css\welcome.css">
+        <link rel="icon" href="img\icono.png">
+        <script src="https://js.pusher.com/8.0.1/pusher.min.js"></script>
+
+
 
     </head>
 
