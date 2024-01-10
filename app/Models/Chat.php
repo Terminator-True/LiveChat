@@ -36,4 +36,21 @@ class Chat extends Model
         return $this->hasOne(Mensaje::class);
     }
 
+
+    /**
+     * Model methods
+     */
+
+    public function get()
+    {
+        $chats = $this::query()->where('id','>',0)->get();
+
+        $final_data = $chats->map(function($chat){
+            return ['name'=> $chat->name,'description'=>$chat->description, 'actual_users'=>$chat->users->count()];
+        });
+
+        return $final_data->toArray();
+
+
+    }
 }
