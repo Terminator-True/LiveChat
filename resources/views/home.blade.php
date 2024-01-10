@@ -25,7 +25,7 @@
                             <td>{{ $chats[$i]['name'] }}</td>
                             <td>{{ $chats[$i]['description'] }}</td>
                             <td> {{ $chats[$i]['actual_users'] }} </td>
-                            <td> <a href=""> <img width=25px src="\img\iniciar-sesion.png" alt=""></a></td>
+                            <td> <a href="{{ route('web.chat',$chats[$i]['id']) }}"> <img width=25px src="\img\iniciar-sesion.png" alt=""></a></td>
                         </tr>
 
                     @endfor
