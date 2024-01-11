@@ -4,9 +4,9 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use GuzzleHttp\Psr7\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -76,6 +76,18 @@ class User extends Authenticatable
 
     }
 
+    public function update_password($new_password)
+    {
+
+        Auth::user()->update([
+            'password'=>$new_password
+        ]);
+
+        return true;
+
+
+    }
+
     public function login($data)
     {
         if (Auth::attempt($data)) {
@@ -91,5 +103,6 @@ class User extends Authenticatable
         Auth::logout();
         return true;
     }
+
 }
 

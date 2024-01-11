@@ -18,4 +18,6 @@ class HomeController extends Controller
         $chats = $this->chat->get();
         return view('home')->with('chats',$chats);
     }
+
+
 }

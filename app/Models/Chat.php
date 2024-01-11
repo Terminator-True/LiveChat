@@ -46,7 +46,12 @@ class Chat extends Model
         $chats = $this::query()->where('id','>',0)->get();
 
         $final_data = $chats->map(function($chat){
-            return ['id'=>$chat->id,'name'=> $chat->name,'description'=>$chat->description, 'actual_users'=>$chat->users->count()];
+            return [
+                'id'=>$chat->id,
+                'name'=> $chat->name,
+                'description'=>$chat->description,
+                'actual_users'=>$chat->users->count()
+            ];
         });
 
         return $final_data->toArray();
