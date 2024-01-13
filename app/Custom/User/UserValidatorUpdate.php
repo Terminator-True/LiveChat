@@ -56,5 +56,52 @@ class UserValidatorUpdate
         }
 
     }
+    public function validate_user(Request $request)
+    {
+
+        try {
+            $data = $request->input();
+
+            $rules = ([
+                'nick'=>[
+                    'string',
+                    'min:3',
+                    'nullable'
+                ],
+                'name'=>[
+                    'string',
+                    'min:3',
+                    'nullable'
+                ],
+                'img'=>[
+                    'image',
+                    'nullable',
+                    'max:2000',
+                    'dimensions:min_width=48,min_height=48,max_width=500,max_height=500'
+                ]
+            ]);
+
+            $validation = Validator::make($data,$rules);
+
+            if ($validation->fails()) {
+                return [
+                    'status'=>419,
+                    'value'=>$validation
+                ];
+            }
+
+            return [
+                'status'=>200,
+                'value'=>$request
+            ];
+
+        } catch (Exception $e) {
+            return [
+                'status'=>500,
+                'value'=> $e->getMessage()
+            ];
+        }
+
+    }
 
 }

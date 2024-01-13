@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\Request;
@@ -11,6 +12,9 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
+
+
+
 
 class User extends Authenticatable
 {
@@ -74,6 +78,45 @@ class User extends Authenticatable
 
         return 200;
 
+    }
+
+    public function update_user(Request $request)
+    {
+        try {
+
+            $data = $request->input();
+            $user = Auth::user();
+
+            // if ($data['new_name'] != '') {
+            //     $user->update([
+            //         'name'=>$data['new_name']
+            //     ]);
+            // }
+
+            // if ($data['new_nick'] != '') {
+            //     $user->update([
+            //         'nick'=>$data['new_nick']
+            //     ]);
+            // }
+            $user->update($request->all());
+
+            if ($request->has('img')) {
+
+                $file = "data:image/png;base64,".base64_encode(file_get_contents($request->file('img')->path()));
+
+                $user->update([
+                    'img'=>$file
+                ]);
+            }
+
+            return True;
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+
+
+        return True;
     }
 
     public function update_password($new_password)

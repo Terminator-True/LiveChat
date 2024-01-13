@@ -9,11 +9,26 @@
     <div id="register" class="container" style="margin: auto">
         <div class="login-page">
             <div class="form">
-                <form method="POST"  action="{{ route('user.update') }}" class="">
+                <form method="POST"  action="{{ route('user.update') }}" class="" enctype="multipart/form-data">
                     @csrf
-                    <input type="text" placeholder="name" name='name'/>
-                    <input type="text" placeholder="nick" name='nick'/>
-                    <input class="form-control form-control-sm" type="file" name="perfil">
+
+                    <input class="@error('name') is-invalid @enderror" type="text" placeholder="New name" name='name'/>
+
+                    @error('name')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+
+                        <input class="@error('nick') is-invalid @enderror" type="text" placeholder="New nick" name='nick'/>
+
+
+                    @error('nick')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                    <input class="form-control form-control-sm" type="file" name="img">
                     <button class="button_piu">Update</button>
 
                     <p class="message"> <a href="#" onclick="password_change()">Change password</a></p>

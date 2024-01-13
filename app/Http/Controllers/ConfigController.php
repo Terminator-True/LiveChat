@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Custom\User\UserValidatorUpdate;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ConfigController extends Controller
 {
@@ -19,8 +20,18 @@ class ConfigController extends Controller
         return view('user-config');
     }
 
-    public function update()
+    public function update(Request $request, UserValidatorUpdate $validator)
     {
+        $validated_user = $validator->validate_user($request);
+        if ($validated_user['status'] == 200) {
+
+            $this->user->update_user($validated_user['value']);
+            return view('user-config');
+        }
+
+        return redirect('config')
+        ->withErrors($validated_user['value'])
+        ->withInput();
 
     }
 
