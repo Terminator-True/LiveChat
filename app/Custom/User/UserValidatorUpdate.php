@@ -66,11 +66,13 @@ class UserValidatorUpdate
                 'nick'=>[
                     'string',
                     'min:3',
+                    'max:10',
                     'nullable'
                 ],
                 'name'=>[
                     'string',
                     'min:3',
+                    'max:10',
                     'nullable'
                 ],
                 'img'=>[

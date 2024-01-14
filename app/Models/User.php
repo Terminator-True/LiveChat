@@ -29,6 +29,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'img',
+        'nick'
     ];
 
     /**
@@ -87,18 +89,9 @@ class User extends Authenticatable
             $data = $request->input();
             $user = Auth::user();
 
-            // if ($data['new_name'] != '') {
-            //     $user->update([
-            //         'name'=>$data['new_name']
-            //     ]);
-            // }
-
-            // if ($data['new_nick'] != '') {
-            //     $user->update([
-            //         'nick'=>$data['new_nick']
-            //     ]);
-            // }
-            $user->update($request->all());
+            //Eliminamos de la array los campos "NULL"
+            $data = array_filter($data, fn($val) => !is_null($val));
+            $result =  $user->update($data);//FIX
 
             if ($request->has('img')) {
 

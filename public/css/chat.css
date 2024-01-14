@@ -206,3 +206,16 @@
     border-radius: 8px;
     background-color: #d55959;
 }
+
+.chat-muestra{
+    position: relative;
+    z-index:1;
+    height: 220px;
+    background-color: #FFFFFF;
+    max-width: 360px;
+    margin: 32px 15px 100px;
+    padding: 0px;
+    align-items: center;
+    text-align: center;
+    box-shadow:0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
