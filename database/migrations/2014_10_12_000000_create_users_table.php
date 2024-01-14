@@ -18,7 +18,7 @@ return new class extends Migration
             $table->smallInteger('type');
             $table->string('email')->unique();
             $table->string('password');
-            $table->binary('img')->nullable();
+            $table->text('img')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
