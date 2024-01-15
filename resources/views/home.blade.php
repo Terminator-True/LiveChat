@@ -4,12 +4,9 @@
 @section('content')
 
 <x-nav-bar/>
-<div style="height: 50%; width:100%;" class="container d-flex align-items-center justify-content-center">
-
-    <div class="container" style="margin: auto;">
-        <table class="table shadow-lg" style="width:">
-            <thead class="table-dark">
-            <tr class="">
+        <table class="table shadow-lg" style="width:50%;margin:50px auto;">
+            <thead class="table-dark p-5" style="">
+            <tr class="p-5">
                 <th scope="col"></th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Descripcion</th>
@@ -33,6 +30,4 @@
 
             </tbody>
         </table>
-    </div>
-</div>
 @endsection

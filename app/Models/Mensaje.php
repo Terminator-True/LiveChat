@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Client\Request;
+use Illuminate\Support\Facades\Auth;
 
 class Mensaje extends Model
 {
@@ -12,6 +14,8 @@ class Mensaje extends Model
     protected $table = 'mensajes';
     protected $fillable = [
         'content',
+        'user_id',
+        'chat_id'
     ];
 
     /**
@@ -28,4 +32,22 @@ class Mensaje extends Model
         return $this->belongsTo(Chat::class);
     }
 
+    /**
+     * Model Methods
+     */
+    public function new_mensaje($data)
+    {
+        if ($data['content']!='') {
+
+            $this->content = $data['content'];
+            $this->user_id = Auth::user()->id;
+            $this->chat_id = $data['chat_id'];
+
+            $this->save();
+        }
+
+
+        return $this;
+    }
 }
+

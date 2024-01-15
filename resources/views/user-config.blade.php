@@ -4,10 +4,9 @@
 @section('content')
 
 <x-nav-bar/>
-<div class="container d-flex justify-content-around" style="width: 100%; margin:auto">
-
-        <div class="flex-row">
-            <div id="" class="flex-row" >
+<div class="">
+        <div class="row" style="width:100%">
+            <div class="column">
                 <div class="login-page">
                     <div class="form">
                         <form method="POST"  action="{{ route('user.update') }}" class="" enctype="multipart/form-data">
@@ -36,28 +35,24 @@
                         </form>
                     </div>
                 </div>
-
             </div>
-        </div>
-
-
-        {{-- <div class="flex-column chat wrapper wrapper-content animated fadeInRight"> --}}
-    <div class="chat-muestra mx-5">
-        <div class="ibox chat-view">
-            {{-- <div class="ibox-content" style="background-color:unset"> --}}
-                <h3>Preview</h3>
-            <div class="ibox-content">
-                <div class="row" >
-                    <div class="" >
-                        <div class="chat-discussion" style="width: 100%">
-                            <div class="chat-message left">
-                                <img class="message-avatar" src="{{ Auth::user()->img }}" alt="">
-                                <div class="message">
-                                    <a class="message-author" href="#"> {{ Auth::user()->nick }} </a>
-                                    <span class="message-date"> Mon Jan 26 2015 - 18:39:23 </span>
-                                    <span class="message-content">
-                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit
-                                        </span>
+            <div class="column" style="width:360px;margin: auto">
+                <div class="ibox chat-view" style="background: white">
+                    <h3 style="padding: 15px">Preview</h3>
+                    <div class="ibox-content">
+                        <div class="row" >
+                            <div class="" >
+                                <div class="chat-discussion" style="width: 100%; height:100%">
+                                    <div class="chat-message left">
+                                        <img class="message-avatar" src="{{ Auth::user()->img }}" alt="">
+                                        <div class="message">
+                                            <a class="message-author" href="#"> {{ Auth::user()->nick }} </a>
+                                            <span class="message-date"> Mon Jan 26 2015 - 18:39:23 </span>
+                                            <span class="message-content">
+                                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit
+                                                </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -65,9 +60,13 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
+
+
+
+
+        {{-- <div class="flex-column chat wrapper wrapper-content animated fadeInRight"> --}}
+</div>
 
 <script>
 

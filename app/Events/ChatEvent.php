@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Mensaje;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -17,8 +18,8 @@ class ChatEvent implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public string $message;
-    public function __construct(string $message)
+    public Mensaje $message;
+    public function __construct(Mensaje $message)
     {
         $this->message = $message;
     }

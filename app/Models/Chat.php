@@ -31,9 +31,9 @@ class Chat extends Model
         return $this->belongsToMany(User::class);
     }
 
-    public function mensaje()
+    public function mensajes()
     {
-        return $this->hasOne(Mensaje::class);
+        return $this->hasMany(Mensaje::class);
     }
 
 
@@ -56,6 +56,7 @@ class Chat extends Model
 
         return $final_data->toArray();
 
-
     }
+
+
 }

@@ -33,6 +33,8 @@ Route::middleware(['auth'])->group(function (){
     Route::post('/updatePassword',[ConfigController::class, 'update_password'])->name('user.password.update');
 
     Route::get('/chat/{chat_id}',[ChatController::class,'index'])->name('web.chat');
+    Route::post('/enviar',[ChatController::class,'enviar'])->name('chat.enviar');
+    Route::post('/recibir',[ChatController::class,'recibir'])->name('user.recibir');
 
     //Admin Routes
 });
