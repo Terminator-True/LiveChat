@@ -23,7 +23,7 @@
             <li>
                 <form method="POST" action="{{ route('user.logout') }}" class="form-inline my-2 my-lg-0">
                   @csrf
-                  <button class="btn btn-light my-2 my-sm-0 float-right" type="submit">Log-out</button>
+                  <button class="btn btn-danger my-2 my-sm-0 float-right" type="submit">Log-out</button>
               </form>
             </li>
         </ul>
