@@ -64,7 +64,12 @@
 
 $('.message a').click(function(){
    $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
-   localStorage.setItem('form','register')
+
+   if (localStorage.getItem('form') == undefined || localStorage.getItem('form') == 'login') {
+        localStorage.setItem('form','register')
+   } else {
+       localStorage.setItem('form','login')
+   }
 });
 
 window.addEventListener("load", (event) => {
