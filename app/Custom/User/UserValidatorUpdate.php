@@ -63,7 +63,7 @@ class UserValidatorUpdate
             $data = $request->input();
 
             if ($request->hasFile('img')) {
-                $file = "data:image/png;base64,".base64_encode(file_get_contents($request->file('img')->path()));
+                $file = $request->file('img');
 
 
                 $image_rules = [
@@ -75,10 +75,12 @@ class UserValidatorUpdate
 
                 $image_validation = Validator::make(['img'=>$file],$image_rules);
 
-                return [
-                    'status'=>419,
-                    'value'=>$image_validation
-                ];
+                if ($image_validation->fails()) {
+                    return [
+                        'status'=>419,
+                        'value'=>$image_validation
+                    ];
+                }
             }
 
             $rules = ([
