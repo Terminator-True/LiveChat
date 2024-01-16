@@ -141,5 +141,9 @@ class User extends Authenticatable
         return true;
     }
 
+    public function is_sa()
+    {
+        return ($this->type == 1) ? true:false;
+    }
 }
 

@@ -77,7 +77,6 @@
 
     <script>
 
-        Pusher.logToConsole = true;//TEST
         const pusher = new Pusher("{{ config('broadcasting.connections.pusher.key') }}",{cluster:'eu'})
         const channel = pusher.subscribe('public')
 
