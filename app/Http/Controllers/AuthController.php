@@ -26,7 +26,9 @@ class AuthController extends Controller
         $result = $register_validator->validate($request);
 
         if ($result['status'] != 200) {
-            return view('registerAndLogin')->with(['error'=>'Mail or Password incorrect']);
+            return redirect(route('web.form'))
+            ->withErrors($result['value'])
+            ->withInput();
         }
 
         $user_creation_status = $this->user->create($result['value']);

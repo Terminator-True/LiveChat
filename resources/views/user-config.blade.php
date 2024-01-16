@@ -28,7 +28,12 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
-                            <input class="form-control form-control-sm" type="file" name="img">
+                            <input class="form-control form-control-sm @error('img') is-invalid @enderror" type="file" name="img">
+                                @error('img')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             <button class="button_piu">Update</button>
 
                             <p class="message"> <a href="#" onclick="password_change()">Change password</a></p>

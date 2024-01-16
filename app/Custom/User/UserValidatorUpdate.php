@@ -62,6 +62,25 @@ class UserValidatorUpdate
         try {
             $data = $request->input();
 
+            if ($request->hasFile('img')) {
+                $file = "data:image/png;base64,".base64_encode(file_get_contents($request->file('img')->path()));
+
+
+                $image_rules = [
+                    'img'=>[
+                        'mimes:jpeg,jpg,png,gif',
+                        'nullable',
+                        'max:2048',
+                ]];
+
+                $image_validation = Validator::make(['img'=>$file],$image_rules);
+
+                return [
+                    'status'=>419,
+                    'value'=>$image_validation
+                ];
+            }
+
             $rules = ([
                 'nick'=>[
                     'string',
@@ -74,12 +93,6 @@ class UserValidatorUpdate
                     'min:3',
                     'max:10',
                     'nullable'
-                ],
-                'img'=>[
-                    'image',
-                    'nullable',
-                    'max:2000',
-                    'dimensions:min_width=48,min_height=48,max_width=500,max_height=500'
                 ]
             ]);
 

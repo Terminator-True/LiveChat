@@ -31,7 +31,7 @@ class UserValidatorRegister
             if ($validation->fails()) {
                 return [
                     'status'=>419,
-                    'value'=>'Email or Password incorrect'
+                    'value'=>$validation
                 ];
             }
 
