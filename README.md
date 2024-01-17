@@ -1,5 +1,5 @@
 
-# ![Logo](https://livechat.joelfarell.me/img/icono.png) Live Chat
+# Live Chat
 
 A live group chat app made in Laravel, Blade, JavaScript, Pusher (for "Socket" communication).
 ## Features
