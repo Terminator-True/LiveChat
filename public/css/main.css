@@ -6,6 +6,11 @@
   padding: 4% 0 0;
   margin: auto;
 }
+.register-page {
+  width: 360px;
+  padding: 4% 0 0;
+  margin: auto;
+}
 .form {
   position: relative;
   z-index: 1;
@@ -54,9 +59,10 @@
   color: #d258f7;
   text-decoration: none;
 }
-.form .register-form {
+.form .deshabilited-form {
   display: none;
 }
+
 .container {
   position: relative;
   z-index: 1;
