@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Chat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -17,7 +18,6 @@ class HomeController extends Controller
     {
         $chats = $this->chat->get();
         Auth::user()->all_chat_unbinding();
-
         return view('home')->with('chats',$chats);
     }
 
