@@ -80,6 +80,7 @@
         const pusher = new Pusher("{{ config('broadcasting.connections.pusher.key') }}",{cluster:'eu'})
         const channel = pusher.subscribe('public')
 
+        // Al cargar la página, automáticamente se nos mueve hasta el último mensaje
         window.onload = (event) => {
             let height = document.getElementById('chat').scrollHeight;
             $('#chat').animate({ scrollTop:height}, 1000);
@@ -87,13 +88,14 @@
 
         const input = document.getElementById('message');
 
-
+        // Escuchamos el evento del Chat
         channel.bind('App\\Events\\ChatEvent', function (datos){
-                console.log(datos.message.user_id)
+                // console.log(datos.message.user_id)
                 let dateTime = datos.message.created_at;
                 let contenido = datos.message.content
                 let chat_id = '{{ $data["chat"]->id }}'
 
+                // Si el evento es del éste chat
                 if (datos && chat_id == datos.message.chat_id) {
 
                         $.ajax({
@@ -108,9 +110,11 @@
                                 console.log(data);
                                 if (data) {
                                     let div = document.createElement('div')
-                                    const hoy = new Date(dateTime);
-                                    let final_date = hoy.getFullYear()+'-'+hoy.getMonth()+'-'+hoy.getDate()+' '+hoy.getHours()+':'+hoy.getMinutes()+':'+hoy.getSeconds()
 
+                                    // Cambiamos el timestamp para que tenga el mismo formato de fecha
+                                     const hoy = new Date(dateTime);
+                                    let final_date = hoy.getFullYear()+'-'+hoy.getMonth()+'-'+hoy.getDate()+' '+hoy.getHours()+':'+hoy.getMinutes()+':'+hoy.getSeconds()
+                                    // Creamos el div del mensaje
                                     div.innerHTML = ' <div class="chat-message left">'
                                             +'<img class="message-avatar" src="'+data.img+'" alt="">'
                                             +'<div class="message">'
@@ -121,8 +125,10 @@
                                                     +'</span>'
                                             +'</div>'
                                         +'</div>'
-
+                                        // Añadimos el div anterior
                                         document.getElementById('chat').appendChild(div)
+
+                                        // Esperamos 500 milisegundos y bajamos hasta el último mensaje
                                         setTimeout(() => {
                                             let height = document.getElementById('chat').scrollHeight;
                                             $('#chat').animate({ scrollTop:height}, 1000);
@@ -157,6 +163,8 @@
                             if (data) {
                                 let div = document.createElement('div')
                                 const hoy = new Date(data.created_at);
+                                // Cambiamos el timestamp para que tenga el mismo formato de fecha
+
                                 let final_date = hoy.getFullYear()+'-'+hoy.getMonth()+'-'+hoy.getDate()+' '+hoy.getHours()+':'+hoy.getMinutes()+':'+hoy.getSeconds()
 
                                 div.innerHTML = ' <div class="chat-message right">'
@@ -169,6 +177,7 @@
                                                 +'</span>'
                                         +'</div>'
                                     +'</div>'
+                                        // Añadimos el div anterior
 
                                     document.getElementById('chat').appendChild(div)
                                     setTimeout(() => {
@@ -185,7 +194,7 @@
 
 
 
-
+        // Al dar al enter enviamos el mensaje y vaciamos el input
         input.addEventListener("keypress", function(event) {
                 // If the user presses the "Enter" key on the keyboard
                 if (event.key === "Enter") {

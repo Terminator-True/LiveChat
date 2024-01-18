@@ -67,7 +67,17 @@ class User extends Authenticatable
         return $this->hasOne(Mensaje::class);
     }
 
-    public function create($data)
+    /**
+     * Model Methods
+     */
+
+    /**
+     * Crea un usuario a partir de los datos recibidos
+     *
+     * @param Array $data
+     * @return int
+     */
+    public function create($data): int
     {
         $user = new User();
 
@@ -83,7 +93,13 @@ class User extends Authenticatable
 
     }
 
-    public function update_user(Request $request)
+    /**
+     * Actualizamos al usuario autenticado
+     *
+     * @param Request $request
+     * @return bool
+     */
+    public function update_user(Request $request): bool
     {
         try {
 
@@ -103,21 +119,26 @@ class User extends Authenticatable
                 ]);
             }
 
-            return True;
+            return true;
         } catch (Exception $e) {
-            return $e->getMessage();
+            // return $e->getMessage();
+            return false;
         }
 
-
-
-        return True;
     }
 
-    public function update_password($new_password)
+    /**
+     * Actualizamos el password del usuario autenticado
+     *
+     * @param String $new_password
+     *
+     * @return bool
+     */
+    public function update_password($new_password): bool
     {
 
         Auth::user()->update([
-            'password'=>$new_password
+            'password'=>Hash::make($new_password)
         ]);
 
         return true;
@@ -125,7 +146,14 @@ class User extends Authenticatable
 
     }
 
-    public function login($data)
+    /**
+     * Autenticamos al usuario
+     *
+     * @param $data
+     *
+     * @return int
+     */
+    public function login($data): int
     {
         if (Auth::attempt($data)) {
             request()->session()->regenerate();
@@ -135,13 +163,22 @@ class User extends Authenticatable
 
     }
 
-    public function logout()
+    /**
+     * Deslogueamos al usuario
+     *
+     * @return bool
+     */
+    public function logout(): bool
     {
         Auth::logout();
         return true;
     }
 
-    public function is_sa()
+    /**
+     * Preguntamos si el usuario es admin
+     * @return bool
+     */
+    public function is_sa(): bool
     {
         return ($this->type == 1) ? true:false;
     }

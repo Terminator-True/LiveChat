@@ -8,7 +8,12 @@ use Carbon\Carbon;
 
 class EliminarRegistrosBorrados
 {
-    public function eliminar()
+    /**
+     * Funcín que elimina los registros que fueron "SOFT-DELETED"
+     *
+     * @return bool
+     */
+    public function eliminar(): bool
     {
         Mensaje::onlyTrashed()
                         ->each(function ($value, $key){

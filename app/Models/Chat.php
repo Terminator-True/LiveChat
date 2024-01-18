@@ -43,7 +43,11 @@ class Chat extends Model
      * Model methods
      */
 
-    public function get()
+     /**
+      * Recoge los datos y los trata para la vista HOME
+      * @return array
+      */
+    public function get(): array
     {
         $chats = $this::query()->where('id','>',0)->get();
 
@@ -61,7 +65,14 @@ class Chat extends Model
     }
 
 
-    public function eliminar($chat_id)
+    /**
+     * Función que elimina un chat y los mensajes del mismo
+     *
+     * @param $chat_id Id del chat
+     *
+     * @return bool
+     */
+    public function eliminar($chat_id): bool
     {
         if ($chat_id > 0) {
 
@@ -81,7 +92,14 @@ class Chat extends Model
         return false;
     }
 
-    public function crear_chat(Request $request)
+    /**
+     * Crea un chat a partir de la información que recibimos del request
+     *
+     * @param Request $request
+     * @return bool
+     */
+
+    public function crear_chat(Request $request): bool
     {
         $data = $request->input();
         if ($data['name']!='' && $data['description']!='') {

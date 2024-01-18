@@ -9,7 +9,16 @@ use Illuminate\Support\Facades\Validator;
 class UserValidatorUpdate
 {
 
-    public function validate_password(Request $request)
+    /**
+     * Función que valida la actualización del password
+     *
+     *
+     * @param Request $request
+     *
+     * @return array status -> 419 == Validation error
+     *                      -> 200 == Validation OK
+     */
+    public function validate_password(Request $request): array
     {
 
         try {
@@ -56,15 +65,23 @@ class UserValidatorUpdate
         }
 
     }
+
+    /**
+     * Función que valida la actualización del usuario
+     *
+     * @param Request $request
+     *
+     * @return Array status -> 419 == Validation error
+     *                      -> 200 == Validation OK
+     */
     public function validate_user(Request $request)
     {
 
         try {
             $data = $request->input();
-
+            // Si en el request existe una imagen
             if ($request->hasFile('img')) {
                 $file = $request->file('img');
-
 
                 $image_rules = [
                     'img'=>[

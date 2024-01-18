@@ -37,7 +37,14 @@ class Mensaje extends Model
     /**
      * Model Methods
      */
-    public function new_mensaje($data)
+
+    /**
+     * Función que crea un mensaje
+     *
+     * @param Array $data
+     * @return Model
+     */
+    public function new_mensaje($data): Model
     {
         if ($data['content']!='') {
 

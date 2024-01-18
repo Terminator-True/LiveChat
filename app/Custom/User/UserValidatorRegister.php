@@ -6,8 +6,15 @@ use Illuminate\Support\Facades\Validator;
 
 class UserValidatorRegister
 {
-
-    public function validate(Request $request)
+    /**
+     * Función que valida el formulario de registro
+     *
+     * @param Request $request
+     *
+     * @return array status -> 419 == Validation error
+     *                      -> 200 == Validation OK
+     */
+    public function validate(Request $request): array
     {
 
         try {

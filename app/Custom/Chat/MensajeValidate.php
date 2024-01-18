@@ -7,7 +7,15 @@ use Illuminate\Support\Facades\Validator;
 class MensajeValidate
 {
 
-    public function validate(Request $request)
+    /**
+     * Función que valida el mensaje enviado a un chat
+     *
+     * @param Request $request
+     *
+     * @return array status -> 419 == Validation error
+     *                      -> 200 == Validation OK
+     */
+    public function validate(Request $request): array
     {
 
         try {

@@ -7,7 +7,12 @@ use Carbon\Carbon;
 
 class EliminarMensajesAntiguos
 {
-    public function eliminar()
+    /**
+     * Función que elimina registros en la tabla MENSAJES con una antiguedad superior a 60 días
+     *
+     * @return bool
+     */
+    public function eliminar(): bool
     {
         $antiguedad_limite = Carbon::now()->subDays(60);
         Mensaje::query()

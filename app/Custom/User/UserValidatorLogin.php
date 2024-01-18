@@ -6,8 +6,15 @@ use Illuminate\Support\Facades\Validator;
 
 class UserValidatorLogin
 {
-
-    public function validate(Request $request)
+    /**
+     * Función que valida el login
+     *
+     * @param Request $request
+     *
+     * @return array status -> 419 == Validation error
+     *                      -> 200 == Validation OK
+     */
+    public function validate(Request $request): array
     {
 
         try {

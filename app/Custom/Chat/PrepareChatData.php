@@ -8,7 +8,14 @@ use App\Models\Mensaje;
 
 class PrepareChatData
 {
-    public function prepare_chat_data($chat_id)
+    /**
+     * Función que prepara los datos para la vista chat
+     *
+     * @param $chat_id Id del chat del que queremos preparar los datos
+     *
+     * @return array $final_data
+     */
+    public function prepare_chat_data($chat_id): array
     {
         $chat_data = Chat::query()->where('id',$chat_id)->first();
 
