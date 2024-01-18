@@ -191,9 +191,12 @@ class User extends Authenticatable
      */
     public function chat_binding($chat_id): bool
     {
-        $this->chats()->attach($chat_id);
+        if (! $this->chats->count()==0) {
+            $this->chats()->attach($chat_id);
+            return true;
+        }
 
-        return true;
+        return false;
     }
 
     /**
