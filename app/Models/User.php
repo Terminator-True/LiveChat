@@ -170,6 +170,7 @@ class User extends Authenticatable
      */
     public function logout(): bool
     {
+        $this->all_chat_unbinding();
         Auth::logout();
         return true;
     }
@@ -181,6 +182,42 @@ class User extends Authenticatable
     public function is_sa(): bool
     {
         return ($this->type == 1) ? true:false;
+    }
+
+    /**
+     * Añadimos al usuario al chat
+     * @param $chat_id
+     * @return bool
+     */
+    public function chat_binding($chat_id): bool
+    {
+        $this->chats()->attach($chat_id);
+
+        return true;
+    }
+
+    /**
+     * Quitamos al usuario del chat
+     * @param $chat_id
+     * @return bool
+     */
+    public function chat_unbinding($chat_id): bool
+    {
+        $this->chats()->detach($chat_id);
+
+        return true;
+    }
+
+    /**
+     * Quitamos al usuario
+     * @param $chat_id
+     * @return bool
+     */
+    public function all_chat_unbinding(): bool
+    {
+        $this->chats()->detach();
+
+        return true;
     }
 }
 

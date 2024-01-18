@@ -17,6 +17,7 @@ class ConfigController extends Controller
 
     public function index()
     {
+        Auth::user()->all_chat_unbinding();
         return view('user-config');
     }
 

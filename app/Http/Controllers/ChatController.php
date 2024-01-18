@@ -8,6 +8,7 @@ use App\Events\ChatEvent;
 use Illuminate\Http\Request;
 use App\Models\Mensaje;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
@@ -21,6 +22,7 @@ class ChatController extends Controller
     public function index($chat_id,PrepareChatData $prepareChatData)
     {
         $data = $prepareChatData->prepare_chat_data($chat_id);
+        Auth::user()->chat_binding($chat_id);
         return view('chat')->with('data',$data);
     }
     public function enviar(Request $request,MensajeValidate $validator)

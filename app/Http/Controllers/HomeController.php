@@ -16,6 +16,8 @@ class HomeController extends Controller
     public function index()
     {
         $chats = $this->chat->get();
+        Auth::user()->all_chat_unbinding();
+
         return view('home')->with('chats',$chats);
     }
 

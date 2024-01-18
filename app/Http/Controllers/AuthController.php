@@ -60,7 +60,8 @@ class AuthController extends Controller
 
     public function logout()
     {
-        $user_logout_status = $this->user->logout();
+        // $user_logout_status = $this->user->logout();
+        $user_logout_status = Auth::user()->logout();
 
         if($user_logout_status) return redirect(route('web.form'));
     }
