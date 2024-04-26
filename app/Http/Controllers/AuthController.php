@@ -16,26 +16,34 @@ class AuthController extends Controller
         $this->user = $user;
     }
 
-    public function show_form()
+    public function login_form()
     {
-        return view('registerAndLogin');
+        return view('login');
     }
+    public function register_form()
+    {
+        return view('register');
+    }
+
 
     public function register(Request $request,UserValidatorRegister $register_validator)
     {
         $result = $register_validator->validate($request);
 
         if ($result['status'] != 200) {
-            return redirect(route('web.form'))
+            return redirect(route('web.register'))
             ->withErrors($result['value'])
             ->withInput();
         }
 
         $user_creation_status = $this->user->create($result['value']);
 
-        if ($user_creation_status != 200) return view('registerAndLogin');
+        if ($user_creation_status != 200) return view('register');
 
-        return redirect(route('web.home'));
+        $data = ['email'=> $result['value']['email'],'password'=> $result['value']['password']];
+        $this->user->login($data);
+
+        return  redirect(route('web.home'));
 
     }
 
@@ -44,14 +52,14 @@ class AuthController extends Controller
         $result = $login_validator->validate($request);
 
         if ($result['status'] != 200) {
-            return view('registerAndLogin')->with(['error'=>'Mail or Password incorrect']);
+            return view('login')->with(['error'=>'Mail or Password incorrect']);
         }
 
         $user_login_status = $this->user->login($result['value']);
 
         if( $user_login_status != 200 )
         {
-            return view('registerAndLogin')->with(['error'=>'Mail or Password incorrect']);
+            return view('login')->with(['error'=>'Mail or Password incorrect']);
         }
 
         return redirect(route('web.home'));
@@ -63,7 +71,7 @@ class AuthController extends Controller
         // $user_logout_status = $this->user->logout();
         $user_logout_status = Auth::user()->logout();
 
-        if($user_logout_status) return redirect(route('web.form'));
+        if($user_logout_status) return redirect(route('web.login'));
     }
 
 }

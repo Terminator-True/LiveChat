@@ -19,7 +19,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/form',[AuthController::class, 'show_form'])->name('web.form');
+Route::get('/register_form',[AuthController::class, 'register_form'])->name('web.register');
+Route::get('/login_form',[AuthController::class, 'login_form'])->name('web.login');
 
 Route::post('/register',[AuthController::class, 'register'])->name('user.register');
 Route::post('/login',[AuthController::class, 'login'])->name('user.login');

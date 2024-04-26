@@ -155,6 +155,7 @@ class User extends Authenticatable
      */
     public function login($data): int
     {
+
         if (Auth::attempt($data)) {
             request()->session()->regenerate();
             return 200;
