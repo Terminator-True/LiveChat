@@ -27,6 +27,7 @@ class PrepareChatData
         $final_data =  [
             'chat'=>$chat_data,
             'mensajes'=>$mensajes,
+
         ];
 
         return $final_data;

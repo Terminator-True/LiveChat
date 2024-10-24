@@ -17,7 +17,8 @@ class Mensaje extends Model
     protected $fillable = [
         'content',
         'user_id',
-        'chat_id'
+        'chat_id',
+        'img'
     ];
 
     /**
@@ -49,6 +50,7 @@ class Mensaje extends Model
         if ($data['content']!='') {
 
             $this->content = $data['content'];
+            $this->img = $data['img'];
             $this->user_id = Auth::user()->id;
             $this->chat_id = $data['chat_id'];
 

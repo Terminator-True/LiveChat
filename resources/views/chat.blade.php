@@ -23,7 +23,7 @@
                         <div class="ibox-content">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div id="chat" class="chat-discussion">
+                                    <div id="chat" class="chat-discussion" style="height: 60vh">
                                         @foreach($data['mensajes'] as $key => $mensaje)
 
                                             @if($mensaje->user_id != Auth::user()->id)
@@ -35,7 +35,10 @@
                                                         <span class="message-date"> {{ $mensaje->created_at }} </span>
                                                         <span class="message-content">
                                                             {{ $mensaje->content }}
-                                                            </span>
+                                                        </span>
+                                                        @isset($mensaje->img)
+                                                            <img class="w-75" src="{{ $mensaje->img }}" alt="">
+                                                        @endisset
                                                     </div>
                                                 </div>
                                             @else
@@ -43,11 +46,17 @@
                                                 <div class="chat-message right">
                                                     <img class="message-avatar" src="{{ $mensaje->user->img }}" alt="">
                                                     <div class="message">
+
                                                         <a class="message-author" href="#"> {{ $mensaje->user->nick }} </a>
                                                         <span class="message-date"> {{ $mensaje->created_at }} </span>
+
                                                         <span class="message-content">
                                                             {{ $mensaje->content }}
-                                                            </span>
+                                                        </span>
+
+                                                        @isset($mensaje->img)
+                                                            <img class="w-75" src="{{ $mensaje->img }}" alt="">
+                                                        @endisset
                                                     </div>
                                                 </div>
 
@@ -70,12 +79,34 @@
                                 </div>
                             </div>
                         </div>
+                        <input type="file" id="image" class="form-control float-end">
                     </div>
                 </div>
             </div>
         </div>
 
     <script>
+
+    var base64String = null;
+
+    const image = document.getElementById('image').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const fileSizeKB = file.size / 1024; // Tamaño del archivo en KB
+            if (fileSizeKB > 10) {
+                alert("La imagen excede el límite de 10KB. Por favor, selecciona una imagen más pequeña.");
+                document.getElementById('image').value = ""; // Limpiar el input si no pasa la validación
+                return; // Salir de la función
+            }
+            const reader = new FileReader();
+            reader.onloadend = function() {
+                base64String = reader.result; // Solo obtenemos el contenido base64
+                console.log(base64String)
+            };
+            reader.readAsDataURL(file); // Leer archivo como Data URL (base64)
+        }
+    });
+
 
         const pusher = new Pusher("{{ config('broadcasting.connections.pusher.key') }}",{cluster:'eu'})
         const channel = pusher.subscribe('public')
@@ -93,6 +124,7 @@
                 // console.log(datos.message.user_id)
                 let dateTime = datos.message.created_at;
                 let contenido = datos.message.content
+                let contenido_img = datos.message.img
                 let chat_id = '{{ $data["chat"]->id }}'
 
                 // Si el evento es del éste chat
@@ -123,6 +155,8 @@
                                                 +'<span class="message-content">'
                                                 + contenido
                                                     +'</span>'
+
+                                                + '<img class="w-75" src='+contenido_img+' alt="">'
                                             +'</div>'
                                         +'</div>'
                                         // Añadimos el div anterior
@@ -144,7 +178,7 @@
 
             });
 
-        function enviar() {
+        function enviar(base64string=null) {
 
             $.ajax({
                         url:"{{ route('chat.enviar') }}",
@@ -156,6 +190,7 @@
                         data:{
                             ' _token': '{{ csrf_token() }}',
                             'content':$('#message').val(),
+                            'img':base64string,
                             'chat_id': '{{ $data["chat"]->id }}'
                         },
                         success:(data)=>{
@@ -168,13 +203,16 @@
                                 let final_date = hoy.getFullYear()+'-'+hoy.getMonth()+'-'+hoy.getDate()+' '+hoy.getHours()+':'+hoy.getMinutes()+':'+hoy.getSeconds()
 
                                 div.innerHTML = ' <div class="chat-message right">'
+
                                         +'<img class="message-avatar" src="{{ Auth::user()->img }}" alt="">'
                                         +'<div class="message">'
                                             +'<a class="message-author" href="#"> {{ Auth::user()->nick }} </a>'
                                             +'<span class="message-date">'+final_date+' </span>'
                                             +'<span class="message-content">'
-                                               + data.content
-                                                +'</span>'
+                                            + data.content
+                                            +'</span>'
+                                            + '<img class="w-75 right" src='+base64string+' alt="">'
+
                                         +'</div>'
                                     +'</div>'
                                         // Añadimos el div anterior
@@ -200,8 +238,10 @@
                 if (event.key === "Enter") {
                     setTimeout(() => {
                         event.preventDefault();
-                        enviar()
+                        enviar(base64String)
                         input.value = '';
+                        document.getElementById('image').value = ""; // Resetear el input
+
                     }, 500);
 
                 }
