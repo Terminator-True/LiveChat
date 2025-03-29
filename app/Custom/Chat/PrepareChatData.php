@@ -21,7 +21,8 @@ class PrepareChatData
 
         $mensajes = Mensaje::query()
                                 ->where('chat_id',$chat_id)
-                                ->take(100)
+                                ->with('image')
+                                ->take(30)
                                 ->get();
 
         $final_data =  [

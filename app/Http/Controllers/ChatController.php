@@ -52,10 +52,12 @@ class ChatController extends Controller
 
     public function recibir(Request $request)
     {
-        $user_id = $request->message['user_id'];
-        // dd($user_id);
+        // dd($request->input('mensaje'));
+        $mensaje = $request->input('mensaje');
+        $mensaje = Mensaje::where('id', $mensaje['id'])->with('image')->first();
+        $user_id = $mensaje['user_id'];
         $user_data = User::select('nick','img')->where('id',$user_id)->first();
-        return ['user'=>$user_data,'message'=>$request->input()['message']];
+        return ['user'=>$user_data,'message'=>$mensaje];
     }
     public function get_image($message_id)
     {

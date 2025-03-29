@@ -25,7 +25,6 @@
                                 <div class="col-md-12">
                                     <div id="chat" class="chat-discussion" style="height: 60vh">
                                         @foreach($data['mensajes'] as $key => $mensaje)
-
                                             @if($mensaje->user_id != Auth::user()->id)
 
                                                 <div class="chat-message left">
@@ -35,10 +34,12 @@
                                                         <span class="message-date"> {{ $mensaje->created_at }} </span>
                                                         <span class="message-content">
                                                             {{ $mensaje->content }}
+
                                                         </span>
-                                                        @isset($mensaje->img)
-                                                            <img class="w-75" src="{{ $mensaje->img }}" alt="">
-                                                        @endisset
+                                                        @if($mensaje->type == 'img')
+
+                                                            <img class="w-75" src="{{ $mensaje->image->data }}" alt="">
+                                                        @endif
                                                     </div>
                                                 </div>
                                             @else
@@ -54,9 +55,10 @@
                                                             {{ $mensaje->content }}
                                                         </span>
 
-                                                        @isset($mensaje->img)
-                                                            <img class="w-75" src="{{ $mensaje->img }}" alt="">
-                                                        @endisset
+                                                        @if($mensaje->type == 'img')
+
+                                                        <img class="w-75" src="{{ $mensaje->image->data }}" alt="">
+                                                    @endif
                                                     </div>
                                                 </div>
 
@@ -124,7 +126,7 @@
                 // console.log(datos.message.user_id)
                 let dateTime = datos.message.created_at;
                 let contenido = datos.message.content
-                let contenido_img = datos.message.img
+                // let contenido_img = datos.message.img
                 let chat_id = '{{ $data["chat"]->id }}'
 
                 // Si el evento es de éste chat
@@ -148,15 +150,15 @@
                                     let final_date = hoy.getFullYear()+'-'+hoy.getMonth()+'-'+hoy.getDate()+' '+hoy.getHours()+':'+hoy.getMinutes()+':'+hoy.getSeconds()
                                     // Creamos el div del mensaje
                                     div.innerHTML = ' <div class="chat-message left">'
-                                            +'<img class="message-avatar" src="'+data.img+'" alt="">'
+                                            +'<img class="message-avatar" src="'+data.user.img+'" alt="">'
                                             +'<div class="message">'
-                                                +'<a class="message-author" href="#">'+data.nick+' </a>'
+                                                +'<a class="message-author" href="#">'+data.user.nick+' </a>'
                                                 +'<span class="message-date">'+final_date+' </span>'
                                                 +'<span class="message-content">'
                                                 + contenido
                                                     +'</span>'
-
-                                                + '<img class="w-75" src='+contenido_img+' alt="">'
+                                                    // Si el mensaje es una imagen, la añadimos
+                                                + '<img class="w-75" src='+data.message?.image?.data+' alt="">'
                                             +'</div>'
                                         +'</div>'
                                         // Añadimos el div anterior
