@@ -25,7 +25,8 @@ class ChatController extends Controller
         Auth::user()->chat_binding($chat_id);
         return view('chat')->with('data',$data);
     }
-    public function enviar(Request $request,MensajeValidate $validator)
+
+    public function enviar(Request $request, MensajeValidate $validator)
     {
         $validated_message = $validator->validate($request);
 
@@ -42,10 +43,25 @@ class ChatController extends Controller
 
     }
 
+    public function add_image($message_id, Request $request){
+        $message = Mensaje::where('id', $message_id)->first();
+        $image_data = $request->input('data');
+        $message->image()->create(['data' => $image_data]);
+        return $message;
+    }
+
     public function recibir(Request $request)
     {
-        $user_id = $request->input()['user_id'];
+        // dd($request->input('mensaje'));
+        $mensaje = $request->input('mensaje');
+        $mensaje = Mensaje::where('id', $mensaje['id'])->with('image')->first();
+        $user_id = $mensaje['user_id'];
         $user_data = User::select('nick','img')->where('id',$user_id)->first();
-        return $user_data;
+        return ['user'=>$user_data,'message'=>$mensaje];
+    }
+    public function get_image($message_id)
+    {
+        $image = Mensaje::find($message_id)->image;
+        return $image;
     }
 }
