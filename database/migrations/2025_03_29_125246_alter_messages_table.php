@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('mensajes', function ($table){
-            $table->longText('img')->nullable();
+        Schema::table('mensajes', function (Blueprint $table) {
+           $table->enum('type',['img','msg'])->default('msg');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('mensajes', function ($table){
-            $table->dropColumn('img');
+        Schema::table('mensajes', function (Blueprint $table) {
+            $table->dropColumn('type');
         });
     }
 };

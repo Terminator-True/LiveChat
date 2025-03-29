@@ -41,6 +41,8 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/chat/{chat_id}',[ChatController::class,'index'])->name('web.chat');
     Route::post('/enviar',[ChatController::class,'enviar'])->name('chat.enviar');
     Route::post('/recibir',[ChatController::class,'recibir'])->name('user.recibir');
+    // Route::post('/add_image',[ChatController::class,'add_image'])->name('message.image');
+    Route::get('/get_image/{message_id}',[ChatController::class,'get_image'])->name('message.get_image');
 
     //Admin Routes
     Route::post('/eliminarChat',[AdminController::class,'eliminar_chat'])->name('admin.eliminar.chat');

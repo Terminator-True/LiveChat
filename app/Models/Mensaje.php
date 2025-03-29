@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\UploadImage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\Request;
@@ -11,14 +12,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Mensaje extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory,SoftDeletes, UploadImage;
 
     protected $table = 'mensajes';
     protected $fillable = [
         'content',
+        'type',
         'user_id',
         'chat_id',
-        'img'
     ];
 
     /**
@@ -35,6 +36,11 @@ class Mensaje extends Model
         return $this->belongsTo(Chat::class);
     }
 
+    public function image()
+    {
+        return $this->hasOne(Image::class);
+    }
+
     /**
      * Model Methods
      */
@@ -47,14 +53,18 @@ class Mensaje extends Model
      */
     public function new_mensaje($data): Model
     {
-        if ($data['content']!='') {
 
+        if ($data['content']!='') {
+            $this->type = $data['type'];
             $this->content = $data['content'];
-            $this->img = $data['img'];
             $this->user_id = Auth::user()->id;
             $this->chat_id = $data['chat_id'];
 
             $this->save();
+
+            if($data['type'] == 'img'){
+                $this->uploadImage($data['img'], $this);
+            }
         }
 
 

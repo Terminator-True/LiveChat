@@ -92,16 +92,16 @@
     const image = document.getElementById('image').addEventListener('change', function(event) {
         const file = event.target.files[0];
         if (file) {
-            const fileSizeKB = file.size / 1024; // Tamaño del archivo en KB
-            if (fileSizeKB > 10) {
-                alert("La imagen excede el límite de 10KB. Por favor, selecciona una imagen más pequeña.");
-                document.getElementById('image').value = ""; // Limpiar el input si no pasa la validación
-                return; // Salir de la función
-            }
+            // const fileSizeKB = file.size / 1024 // Tamaño del archivo en KB
+            // if (fileSizeKB > 10) {
+            //     alert("La imagen excede el límite de 10KB. Por favor, selecciona una imagen más pequeña.");
+            //     document.getElementById('image').value = ""; // Limpiar el input si no pasa la validación
+            //     return; // Salir de la función
+            // }
             const reader = new FileReader();
             reader.onloadend = function() {
                 base64String = reader.result; // Solo obtenemos el contenido base64
-                console.log(base64String)
+                // console.log(base64String)
             };
             reader.readAsDataURL(file); // Leer archivo como Data URL (base64)
         }
@@ -127,7 +127,7 @@
                 let contenido_img = datos.message.img
                 let chat_id = '{{ $data["chat"]->id }}'
 
-                // Si el evento es del éste chat
+                // Si el evento es de éste chat
                 if (datos && chat_id == datos.message.chat_id) {
 
                         $.ajax({
@@ -136,10 +136,10 @@
                             async: false,
                             data:{
                                 ' _token': '{{ csrf_token() }}',
-                                'user_id':datos.message.user_id,
+                                'mensaje':datos.message,
                             },
                             success:(data)=>{
-                                console.log(data);
+                                // console.log(data);
                                 if (data) {
                                     let div = document.createElement('div')
 
@@ -189,12 +189,13 @@
                         },
                         data:{
                             ' _token': '{{ csrf_token() }}',
-                            'content':$('#message').val(),
-                            'img':base64string,
+                            'type':base64string!=null ? 'img':'msg',
+                            'content': $('#message').val(),
+                            'img': base64string,
                             'chat_id': '{{ $data["chat"]->id }}'
                         },
                         success:(data)=>{
-                            // console.log(data);
+                            console.log(data);
                             if (data) {
                                 let div = document.createElement('div')
                                 const hoy = new Date(data.created_at);
@@ -215,7 +216,7 @@
 
                                         +'</div>'
                                     +'</div>'
-                                        // Añadimos el div anterior
+                                    // Añadimos el div anterior
 
                                     document.getElementById('chat').appendChild(div)
                                     setTimeout(() => {
@@ -225,7 +226,7 @@
                             }
                         },
                         error:(data)=>{
-                            // console.log(data)
+                            console.log(data)
                         }
                     });
         }
@@ -233,18 +234,15 @@
 
 
         // Al dar al enter enviamos el mensaje y vaciamos el input
-        input.addEventListener("keypress", function(event) {
+        input.addEventListener("keypress", async function(event) {
                 // If the user presses the "Enter" key on the keyboard
                 if (event.key === "Enter") {
-                    setTimeout(() => {
-                        event.preventDefault();
-                        enviar(base64String)
-                        input.value = '';
-                        document.getElementById('image').value = ""; // Resetear el input
-
-                    }, 500);
-
+                    event.preventDefault();
+                    await enviar(base64String)
+                    input.value = '';
+                    document.getElementById('image').value = ""; // Resetear el input
                 }
         });
+
     </script>
 @endsection
