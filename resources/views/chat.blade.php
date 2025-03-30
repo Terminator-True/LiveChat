@@ -225,6 +225,8 @@
                                     setTimeout(() => {
                                         let height = document.getElementById('chat').scrollHeight;
                                         $('#chat').animate({ scrollTop:height}, 1000);
+                                        $('#message').val(''); // Limpiar el input
+                                        document.getElementById('image').value = ""; // Limpiar el input
                                     }, 500);
                             }
                         },
