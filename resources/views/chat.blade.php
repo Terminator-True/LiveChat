@@ -227,6 +227,7 @@
                                         $('#chat').animate({ scrollTop:height}, 1000);
                                         $('#message').val(''); // Limpiar el input
                                         document.getElementById('image').value = ""; // Limpiar el input
+                                        base64string=null
                                     }, 500);
                             }
                         },
