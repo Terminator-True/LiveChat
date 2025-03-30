@@ -143,10 +143,11 @@
                             success:(data)=>{
                                 // console.log(data);
                                 if (data) {
+                                    sound_notification()
                                     let div = document.createElement('div')
 
                                     // Cambiamos el timestamp para que tenga el mismo formato de fecha
-                                     const hoy = new Date(dateTime);
+                                    const hoy = new Date(dateTime);
                                     let final_date = hoy.getFullYear()+'-'+hoy.getMonth()+'-'+hoy.getDate()+' '+hoy.getHours()+':'+hoy.getMinutes()+':'+hoy.getSeconds()
                                     // Creamos el div del mensaje
                                     div.innerHTML = ' <div class="chat-message left">'
@@ -245,6 +246,11 @@
                     document.getElementById('image').value = ""; // Resetear el input
                 }
         });
+
+        function sound_notification(){
+            var audio = new Audio("{{ asset('audio/notification.mp3') }}");
+            audio.play();
+        }
 
     </script>
 @endsection
