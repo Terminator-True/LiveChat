@@ -219,10 +219,7 @@
 
                                         +'</div>'
                                     +'</div>'
-                                    // Añadimos el div anterior
-                                    document.getElementById('image').value = ""; // Limpiar el input
-                                    base64string=null
-                                    $('#message').val(''); // Limpiar el input
+
 
                                     document.getElementById('chat').appendChild(div)
                                     setTimeout(() => {
@@ -242,9 +239,11 @@
         // Al dar al enter enviamos el mensaje y vaciamos el input
         input.addEventListener("keypress", async function(event) {
                 // If the user presses the "Enter" key on the keyboard
+                let foto = base64String;
+                base64String = null
                 if (event.key === "Enter") {
                     event.preventDefault();
-                    await enviar(base64String)
+                    await enviar(foto);
                     input.value = '';
                     document.getElementById('image').value = ""; // Resetear el input
                 }
