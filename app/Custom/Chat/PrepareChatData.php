@@ -22,8 +22,10 @@ class PrepareChatData
         $mensajes = Mensaje::query()
                                 ->where('chat_id',$chat_id)
                                 ->with('image')
+                                ->orderBy('created_at', 'desc')
                                 ->take(30)
-                                ->get();
+                                ->get()
+                                ->reverse();
 
         $final_data =  [
             'chat'=>$chat_data,
