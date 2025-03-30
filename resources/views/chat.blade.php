@@ -220,14 +220,14 @@
                                         +'</div>'
                                     +'</div>'
                                     // Añadimos el div anterior
+                                    document.getElementById('image').value = ""; // Limpiar el input
+                                    base64string=null
+                                    $('#message').val(''); // Limpiar el input
 
                                     document.getElementById('chat').appendChild(div)
                                     setTimeout(() => {
                                         let height = document.getElementById('chat').scrollHeight;
                                         $('#chat').animate({ scrollTop:height}, 1000);
-                                        $('#message').val(''); // Limpiar el input
-                                        document.getElementById('image').value = ""; // Limpiar el input
-                                        base64string=null
                                     }, 500);
                             }
                         },
